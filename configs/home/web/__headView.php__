@@ -1,0 +1,12 @@
+<?php
+class headView extends odView
+{
+   public function __construct($datas, $args)
+   {
+      parent::__construct($datas, $args);
+      
+   	$this->set_template_name("templates/head.tpl");
+   }
+   
+}
+?>

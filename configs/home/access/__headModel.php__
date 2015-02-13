@@ -1,0 +1,13 @@
+<?php
+class headModel extends odModel {
+
+	public function action($param) {
+		// here, you make your database access!
+	}
+
+	public function perform($param) {
+		// here, you make your database access!
+	}
+
+}
+?>

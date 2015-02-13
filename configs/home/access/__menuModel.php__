@@ -1,0 +1,8 @@
+<?php
+class menuModel extends odModel {
+
+  public function action($param) {}
+  public function perform($param) {}
+
+}
+?>

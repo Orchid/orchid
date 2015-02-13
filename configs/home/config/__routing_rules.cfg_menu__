@@ -1,0 +1,8 @@
+<?php
+$routing_rules = [
+   "homehome" => ["module" => "home", "action" => "home"],
+   "homeheader" => ["module" => "home", "action" => "header"],
+   "homehead" => ["module" => "home", "action" => "head"],
+	 "menuhome" => ["module" => "home", "action" => "menu"],
+];
+?>

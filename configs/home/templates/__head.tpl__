@@ -1,0 +1,10 @@
+{start_block}
+  <head>
+     <title>Titre de votre page</title>
+     <meta content="text/html; Charset=UTF-8" http-equiv="Content-Type"/>
+     {oscript}
+        include_script_tag("jquery/jquery-1.8.3.min.js");
+        link_tag("main.css",  array("rel" => "stylesheet", "type" => "text/css"));
+     {end_oscript}
+  </head>
+{end_block}

@@ -1,0 +1,6 @@
+{start_block}
+  <div>
+     Home
+     {odump get_defined_vars()}
+  </div>
+{end_block}

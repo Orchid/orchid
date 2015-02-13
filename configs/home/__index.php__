@@ -1,0 +1,9 @@
+include_once($orchid_path."/lib/autoload/odAutoload.class.php");
+$al = new odAutoLoad(__DIR__);
+$context = odContext::initialize(__DIR__);
+$controller = new odController();
+$dispatcher = new odDispatcher();
+$controller->attach($dispatcher);
+$context->set_current_controller($controller);
+$controller->notify();
+?>
