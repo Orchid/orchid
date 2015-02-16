@@ -13,6 +13,7 @@ abstract class odObject implements arrayaccess {
     abstract public function create();
     abstract public function save();
     abstract public function delete();
+    abstract public function count();
 
     public function &__get($key) {
       return $this->__data[$key];
