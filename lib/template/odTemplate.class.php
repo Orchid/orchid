@@ -83,6 +83,7 @@ class odTemplate {
 			unset($transformateur);
       
 			//echo $this->file_content;
+      file_put_contents("logs/output.php", $this->file_content);
 			
       // On évalue le code obtenu de la page
       eval(stripSlashes("?\>".utf8_encode($this->file_content)));
