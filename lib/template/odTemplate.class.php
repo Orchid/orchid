@@ -15,11 +15,7 @@ class odTemplate {
 	public function read_template() {
     // Lecture du template
     $xml = file_get_contents($this->file_path);
-    
-    // suppression des tags {start_block} et {end_block}
-    $xml_formated = str_replace('{start_block}', '<!-- Orchid block begin -->', utf8_decode(html_entity_decode($xml)));
-    $xml_formated = str_replace('{end_block}', '<!-- Orchid block end -->', $xml_formated);
-    
+    $xml_formated = utf8_decode(html_entity_decode($xml));
     $this->file_content .= $xml_formated;
   }
       	
@@ -28,11 +24,7 @@ class odTemplate {
     if (file_exists("templates/modules.tpl")) {
       // Lecture du fichier module.tpl
       $xml = file_get_contents("templates/modules.tpl");
-      
-      // suppression des tags {start_block} et {end_block}
-      $xml_formated = str_replace('{start_block}', '', utf8_decode(html_entity_decode($xml)));
-      $xml_formated = str_replace('{end_block}', '', $xml_formated);
-      
+      $xml_formated = utf8_decode(html_entity_decode($xml));
       $this->file_content .= $xml_formated;
     }
   }
@@ -52,7 +44,7 @@ class odTemplate {
     // S'il y a quelque chose dans module.tpl, il ne doit y avoir que des tag omodule
  		if (strlen($this->file_content) != 0) {
       // On va chercher le tag omodule
-      $module_tag = $transformateur->get_named_tag("otheromodule");
+      $module_tag = $transformateur->get_named_tag("omodule");
       
       // On le transforme par l'instruction d'ajout dans la table des tags de odTransform
 			$this->file_content = preg_replace($module_tag[0], html_entity_decode($module_tag[1]), $this->file_content);
@@ -82,7 +74,6 @@ class odTemplate {
 			unset($odtag);
 			unset($transformateur);
       
-			//echo $this->file_content;
       file_put_contents("logs/output.php", $this->file_content);
 			
       // On évalue le code obtenu de la page
