@@ -189,14 +189,15 @@ class odDatabaseRequest
 
 		$req = self::insert_tag." ".$table." (".implode(",", $attributes).") ".self::values_tag." (";
 		foreach ($values as $value) {
-			if ($value == self::now_tag) {
-				$req .= self::now_tag.",";
-			}
 			if (is_numeric($value)) {
 				$req .= $value.",";
 			} else {
-        $value = str_replace("(string)", "", $value);
-				$req .= "'".addSlashes(trim($value))."',";
+				if ($value == self::now_tag) {
+					$req .= self::now_tag.",";
+				} else {
+			        $value = str_replace("(string)", "", $value);
+					$req .= "'".addSlashes(trim($value))."',";
+				}
 			}
 		}
 		$req = substr($req, 0, strlen($req) - 1);
