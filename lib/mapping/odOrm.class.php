@@ -30,7 +30,11 @@ abstract class odOrm implements arrayaccess {
     }
     
     public function get_first() {
-      return $this->_content[0];
+      if (isset($this->_content[0])) {
+        return $this->_content[0];
+      } else {
+        return $this->_content;
+      }
     }
     
     // si $id n'est pas renseignée, cela correspond à vider la table
