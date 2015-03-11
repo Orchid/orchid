@@ -270,15 +270,25 @@ class odDatabaseRequest
 			$req .= " ".self::where_tag." ";
 			foreach($conditions as $condition) {
 				$req .= $condition[0];
-        if (array_key_exists($condition[1], $this->_op)) {
-			     $req .= " ".$this->_op[$condition[1]];
-        } else {
-           throw new odException("Usage : makeDeleteRequest() : bad operator for where clause");
-        }
-        $req .= " ".$condition[2];
+        		if (array_key_exists($condition[1], $this->_op)) {
+			     	$req .= " ".$this->_op[$condition[1]];
+			     	if ($condition[1] == "IN") {
+			     		$req .= ' (';
+			     	}
+        		} else {
+           			throw new odException("Usage : makeDeleteRequest() : bad operator for where clause");
+        		}
+        		if (is_numeric($condition[2])) {
+        			$req .= " ".$condition[2];
+        		} else {
+        			$req .= "'".$condition[2]."'";
+        		}
+		     	if ($condition[1] == "IN") {
+		     		$req .= ')';
+		     	}
 				if (isset($condition[3])) {
-  				   if (strtolower($condition[3]) == "and") $req .= " ".self::and_tag." ";
-  				   if (strtolower($condition[3]) == "or") $req .= " ".self::or_tag." ";
+  					if (strtolower($condition[3]) == "and") $req .= " ".self::and_tag." ";
+  					if (strtolower($condition[3]) == "or") $req .= " ".self::or_tag." ";
 				}
 			}
 		}
