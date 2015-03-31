@@ -52,7 +52,8 @@ class odImportExport {
         $result = $request->runQuery();
         
         foreach ($all_requests as $req) {
-          $request->makeRequest($req);
+          $request->makeRequest(str_replace("\n", "", $req));
+          $request->runQuery();
         }
         break;
       case "zip" :
