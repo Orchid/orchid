@@ -22,7 +22,7 @@
 #
 <VirtualHost 127.0.0.1:80>
     ServerAdmin webmaster@__domaine__
-    DocumentRoot "__path__/__domaine__"
+    DocumentRoot "__path__/__name__"
     ServerName __domaine__
     ErrorLog "logs/__domaine__-error.log"
     CustomLog "logs/__domaine__-access.log" common
