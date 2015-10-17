@@ -7,6 +7,7 @@ class odTransform {
 		"loop_begin2" 		=> array("/<ofor\s+(\w+?)\s+as\s+\[(.+?)\.\.(.+?)\]:(.+?)>/",
 							         "<?php if (\$3 > \$2) { \$__begin_\$1=\$2; \$__end_\$1=\$3; \$__sens_\$1=1; } else { \$__begin_\$1=\$3; \$__end_\$1=\$2; \$__sens_\$1=-1; } \$status_\$1['count']=\$__end_\$1-\$__begin_\$1; \$status_\$1['first']=\$__begin_\$1; \$status_\$1['last']=\$__end_\$1; for($\$1=\$__begin_\$1; $\$1<\$__end_\$1; $\$1=$\$1+\$4*\$__sens_\$1) { \$status_\$1['next']=$\$1 + 1; \$status_\$1['prev']=$\$1 - 1; \$status_\$1['index']=$\$1; ?&gt;"),
 		"loop_end"			=> array("/<\/(oloop|ofor)>/", "<?php } ?&gt;"),
+		"obreak"			=> array("/<obreak>/", "<?php break; ?&gt;"),
 		"include"    		=> array("/<oinclude\s+(.+?)>/", "<?php include('\$1'); ?&gt;"),
 		"script_begin"		=> array("/<oscript>/", "<?php "),
 		"script_end" 		=> array("/<\/oscript>/", " ?&gt;"),
