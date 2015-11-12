@@ -15,7 +15,7 @@ class odTemplate {
 	public function read_template() {
     // Lecture du template
     $xml = file_get_contents($this->file_path);
-    $xml_formated = utf8_decode(html_entity_decode($xml));
+    $xml_formated = utf8_decode($xml);
     $this->file_content .= $xml_formated;
   }
       	
@@ -24,7 +24,7 @@ class odTemplate {
     if (file_exists("templates/modules.tpl")) {
       // Lecture du fichier module.tpl
       $xml = file_get_contents("templates/modules.tpl");
-      $xml_formated = utf8_decode(html_entity_decode($xml));
+      $xml_formated = utf8_decode($xml);
       $this->file_content .= $xml_formated;
     }
   }
