@@ -5,7 +5,8 @@ class odAutoload {
 
 	protected $baseDir = null,
 	          $appDir = null,
-             $namespaces = null;
+			  $namespaces = null,
+			  $serverDir = null;
 	protected $classes = array(
   			"odObserver" => "observer/odObserver.class.php",
   			"odObservable" => "observer/odObservable.class.php",
@@ -25,39 +26,52 @@ class odAutoload {
   			"odTemplate" => "template/odTemplate.class.php",
   			"odTransform" => "template/odTransform.class.php",
   			"odOrm" => "mapping/odOrm.class.php",
-        "odLogger" => "logs/odLogger.class.php",
-        "odFile" => "site_helpers/odFile.class.php",
-        "odZip" => "site_helpers/odZip.class.php",
-        "odObject" => "site_helpers/odObject.class.php",
-        "odImportExport" => "mapping/odImportExport.class.php");
+	        "odLogger" => "logs/odLogger.class.php",
+	        "odFile" => "site_helpers/odFile.class.php",
+	        "odZip" => "site_helpers/odZip.class.php",
+	        "odObject" => "site_helpers/odObject.class.php",
+	        "odImportExport" => "mapping/odImportExport.class.php");
 
 	public function __construct($application_path) {
 		$this->baseDir = realpath(dirname(__FILE__).'/..');
 		$this->appDir = $application_path;
+		$this->serverDir = $this->appDir."\..";
 
-    require_once($this->baseDir."/helpers/PartialHelper.php");
-    require_once($this->baseDir."/helpers/UrlHelper.php");
-    require_once($this->baseDir."/helpers/AssetHelper.php");
-    require_once($this->baseDir."/helpers/TagHelper.php");
-    require_once($this->baseDir."/site_helpers/CookieHelper.php");
-    require_once($this->baseDir."/site_helpers/UrlHelper.php");
-    require_once($this->baseDir."/site_helpers/LangHelper.php");
-    require_once($this->baseDir."/site_helpers/Tools.php");
+		require_once($this->baseDir."/helpers/PartialHelper.php");
+	    require_once($this->baseDir."/helpers/UrlHelper.php");
+	    require_once($this->baseDir."/helpers/AssetHelper.php");
+	    require_once($this->baseDir."/helpers/TagHelper.php");
+	    require_once($this->baseDir."/site_helpers/CookieHelper.php");
+	    require_once($this->baseDir."/site_helpers/UrlHelper.php");
+	    require_once($this->baseDir."/site_helpers/LangHelper.php");
+	    require_once($this->baseDir."/site_helpers/Tools.php");
 		
-		// prÃ©paration du chemin des classes du framework
-		foreach($this->classes as $key => $entry)	{
+		// préparation du chemin des classes du framework
+		foreach($this->classes as $key => $entry) {
 			$this->classes[$key] = $this->baseDir."/".$entry;
 		}
 		
-		// enregistrement des namespaces que l'on souhaite voir scrutÃ©s
+		// Recherche des dépendances du projet
+		if (file_exists($this->appDir."/config/dependencies.cfg")) {
+			require_once($this->appDir."/config/dependencies.cfg");
+		}
+		
+		// enregistrement des namespaces que l'on souhaite voir scrutés
 		$this->namespaces = array();
 		$this->__getModules($this->appDir."/access/", $this->namespaces);
 		$this->__getModules($this->appDir."/web/", $this->namespaces);
 		$this->__getModules($this->appDir."/mapping/", $this->namespaces);
 		$this->__getModules($this->appDir."/lib/", $this->namespaces);
-    $this->namespaces = array_unique($this->namespaces);
+		
+		if (file_exists($this->appDir."/config/dependencies.cfg")) {
+			foreach($dependencies as $dependency) {
+				$this->__getModules($this->serverDir."/".$dependency, $this->namespaces);
+			}
+		}
+		
+	    $this->namespaces = array_unique($this->namespaces);
       
-      // ajout des classes qui se trouvent dans les namespaces
+		// ajout des classes qui se trouvent dans les namespaces
 		foreach($this->namespaces as $entryPath) {
 			if ($handle = opendir($entryPath)) {
 				while (false !== ($entry = readdir($handle))) {
